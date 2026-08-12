@@ -17,6 +17,12 @@ admin.site.register(Challenge)
 admin.site.register(Impact)
 
 
+class DetailInline(admin.StackedInline):
+    model = Detail
+    extra = 0
+    max_num = 1
+
+
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = (
@@ -43,6 +49,8 @@ class ProjectAdmin(admin.ModelAdmin):
     )
 
     ordering = ("name",)
+    
+    inlines = (DetailInline,)
 
 
 @admin.register(Technology)
