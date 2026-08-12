@@ -77,6 +77,24 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
 
+class Technology(models.Model):
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+    )
+    name = models.CharField(
+        max_length=60,
+        unique=True,
+    )
+    date_added = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    def __str__(self):
+        return self.name
+
+
 class Project(models.Model):
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -94,8 +112,12 @@ class Project(models.Model):
         format="jpg",
         transformation=[{"quality": "auto", "fetch_format": "auto"}],
     )
-    date_added = models.DateTimeField(auto_now_add=True)
+    technologies = models.ManyToManyField(
+        Technology,
+        blank=True,
+    )
     is_featured = models.BooleanField(default=False)
+    date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering: typing.ClassVar = ["name"]
