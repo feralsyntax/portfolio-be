@@ -106,7 +106,7 @@ class Feature(models.Model):
 class KeyFeature(models.Model):
     title = models.CharField(max_length=160)
     description = models.TextField()
-    
+
     def __str__(self):
         return self.title
 
@@ -114,46 +114,24 @@ class KeyFeature(models.Model):
 class Challenge(models.Model):
     title = models.CharField(max_length=160)
     description = models.TextField()
-    
+
     def __str__(self):
-            return self.title
+        return self.title
 
 
 class Impact(models.Model):
     title = models.CharField(max_length=160)
     description = models.TextField()
-    
+
     def __str__(self):
-            return self.title
-
-
-class Detail(models.Model):
-    problem = models.TextField()
-    solution = models.TextField()
-    overview = models.TextField()
-    front_end_techs = models.CharField(max_length=160)
-    back_end_techs = models.CharField(max_length=160)
-    other_techs = models.CharField(max_length=160)
-    key_features = models.ManyToManyField(
-        KeyFeature,
-        blank=True,
-    )
-    challenges = models.ManyToManyField(
-        Challenge,
-        blank=True,
-    )
-    impacts = models.ManyToManyField(
-        Impact,
-        blank=True,
-    )
-    live_site = models.URLField()
+        return self.title
 
 
 class Industry(models.Model):
     name = models.CharField(max_length=160)
-    
+
     def __str__(self):
-            return self.name
+        return self.name
 
 
 class Project(models.Model):
@@ -170,9 +148,6 @@ class Project(models.Model):
         overwrite=True,
         format="jpg",
         transformation=[{"quality": "auto", "fetch_format": "auto"}],
-    )
-    details = models.OneToOneField(
-        Detail, on_delete=models.CASCADE, blank=True, null=True
     )
     industry = models.ForeignKey(
         Industry, on_delete=models.SET_NULL, blank=True, null=True
@@ -193,3 +168,32 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Detail(models.Model):
+    problem = models.TextField()
+    solution = models.TextField()
+    overview = models.TextField()
+    front_end_techs = models.CharField(max_length=160)
+    back_end_techs = models.CharField(max_length=160)
+    other_techs = models.CharField(max_length=160)
+    live_site = models.URLField()
+    key_features = models.ManyToManyField(
+        KeyFeature,
+        blank=True,
+    )
+    challenges = models.ManyToManyField(
+        Challenge,
+        blank=True,
+    )
+    impacts = models.ManyToManyField(
+        Impact,
+        blank=True,
+    )
+    project = models.OneToOneField(
+        Project,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="details",
+    )
