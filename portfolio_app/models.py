@@ -78,11 +78,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Feature(models.Model):
-    uuid = models.UUIDField(
-        default=uuid.uuid4,
-        unique=True,
-        editable=False,
-    )
     name = models.CharField(
         max_length=60,
         unique=True,
@@ -96,11 +91,6 @@ class Feature(models.Model):
 
 
 class Technology(models.Model):
-    uuid = models.UUIDField(
-        default=uuid.uuid4,
-        unique=True,
-        editable=False,
-    )
     name = models.CharField(
         max_length=60,
         unique=True,
