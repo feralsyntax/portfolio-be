@@ -11,9 +11,6 @@ from portfolio_app.models import (
     Technology,
 )
 
-admin.site.register(Technology)
-admin.site.register(Feature)
-admin.site.register(Industry)
 admin.site.register(Detail)
 admin.site.register(KeyFeature)
 admin.site.register(Challenge)
@@ -45,4 +42,25 @@ class ProjectAdmin(admin.ModelAdmin):
         "features",
     )
 
+    ordering = ("name",)
+
+
+@admin.register(Technology)
+class TechnologyAdmin(admin.ModelAdmin):
+    list_display = ("name", "date_added")
+    search_fields = ("name",)
+    ordering = ("name",)
+
+
+@admin.register(Feature)
+class FeatureAdmin(admin.ModelAdmin):
+    list_display = ("name", "date_added")
+    search_fields = ("name",)
+    ordering = ("name",)
+
+
+@admin.register(Industry)
+class IndustryAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    search_fields = ("name",)
     ordering = ("name",)
