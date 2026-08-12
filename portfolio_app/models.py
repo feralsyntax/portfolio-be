@@ -138,7 +138,7 @@ class Detail(models.Model):
         blank=True,
     )
     live_site = models.URLField()
-    
+
 
 class Industry(models.Model):
     name = models.CharField(max_length=160)
