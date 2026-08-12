@@ -1,3 +1,7 @@
+import typing
+import uuid
+
+from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -71,3 +75,30 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
+
+
+class Project(models.Model):
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+    )
+    name = models.CharField(max_length=100, unique=True)
+    short_description = models.CharField(max_length=160)
+    long_description = models.TextField()
+    details = models.TextField()
+    industry = models.CharField(max_length=100)
+    snapshot = CloudinaryField(
+        "image",
+        overwrite=True,
+        format="jpg",
+        transformation=[{"quality": "auto", "fetch_format": "auto"}],
+    )
+    date_added = models.DateTimeField(auto_now_add=True)
+    is_featured = models.BooleanField(default=False)
+
+    class Meta:
+        ordering: typing.ClassVar = ["name"]
+
+    def __str__(self):
+        return self.name
