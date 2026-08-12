@@ -77,7 +77,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
 
-class Feature(models.Model):
+class Technology(models.Model):
     name = models.CharField(
         max_length=60,
         unique=True,
@@ -90,7 +90,7 @@ class Feature(models.Model):
         return self.name
 
 
-class Technology(models.Model):
+class Feature(models.Model):
     name = models.CharField(
         max_length=60,
         unique=True,
