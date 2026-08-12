@@ -1,6 +1,11 @@
 from django.contrib.auth.models import (
+    AbstractBaseUser,
     BaseUserManager,
+    PermissionsMixin,
 )
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
@@ -31,3 +36,38 @@ class CustomAccountManager(BaseUserManager):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self.create_user(email, password, **extra_fields)
+
+
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(
+        _("email address"),
+        unique=True,
+        error_messages={
+            "unique": _("A user with this email already exists."),
+        },
+    )
+
+    is_staff = models.BooleanField(
+        _("staff status"),
+        default=False,
+        help_text=_("Designates whether this user can log into the admin site."),
+    )
+
+    is_active = models.BooleanField(
+        _("active"),
+        default=True,
+        help_text=_(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
+
+    date_joined = models.DateTimeField(
+        _("date joined"),
+        default=timezone.now,
+    )
+
+    objects = CustomAccountManager()
+
+    EMAIL_FIELD = "email"
+    USERNAME_FIELD = "email"
