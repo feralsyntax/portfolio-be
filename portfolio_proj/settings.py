@@ -15,7 +15,6 @@ from pathlib import Path
 import dj_database_url
 from decouple import config
 
-
 # Basic Configurations
 SECRET_KEY = config("SECRET_KEY")
 MODE = config("MODE", default="dev", cast=str)
@@ -31,6 +30,26 @@ ALLOWED_HOSTS = config(
     default="127.0.0.1",
     cast=lambda v: [s.strip() for s in v.split(",")],
 )
+
+# Database Configurations
+if config("MODE") == "dev":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config("DB_NAME"),
+            "USER": config("DB_USER"),
+            "PASSWORD": config("DB_PASSWORD"),
+            "HOST": config("DB_HOST"),
+            "PORT": "5432",
+        }
+    }
+else:
+    DATABASES = {"default": dj_database_url.config(default=config("DATABASE_URL"))}
+
+
+# Update DATABASES with settings from environment
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES["default"].update(db_from_env)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
