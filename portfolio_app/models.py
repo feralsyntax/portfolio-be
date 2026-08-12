@@ -77,6 +77,24 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
 
+class Feature(models.Model):
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+    )
+    name = models.CharField(
+        max_length=60,
+        unique=True,
+    )
+    date_added = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    def __str__(self):
+        return self.name
+
+
 class Technology(models.Model):
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -114,6 +132,10 @@ class Project(models.Model):
     )
     technologies = models.ManyToManyField(
         Technology,
+        blank=True,
+    )
+    features = models.ManyToManyField(
+        Feature,
         blank=True,
     )
     is_featured = models.BooleanField(default=False)
