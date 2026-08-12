@@ -58,7 +58,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Application definition
 
 INSTALLED_APPS = [
-    "porfolio_app",
+    "portfolio_app",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -67,6 +67,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
 ]
+
+AUTH_USER_MODEL = "portfolio_app.CustomUser"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
