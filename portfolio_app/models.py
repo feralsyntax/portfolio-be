@@ -106,16 +106,25 @@ class Feature(models.Model):
 class KeyFeature(models.Model):
     title = models.CharField(max_length=160)
     description = models.TextField()
+    
+    def __str__(self):
+        return self.title
 
 
 class Challenge(models.Model):
     title = models.CharField(max_length=160)
     description = models.TextField()
+    
+    def __str__(self):
+            return self.title
 
 
 class Impact(models.Model):
     title = models.CharField(max_length=160)
     description = models.TextField()
+    
+    def __str__(self):
+            return self.title
 
 
 class Detail(models.Model):
@@ -142,6 +151,9 @@ class Detail(models.Model):
 
 class Industry(models.Model):
     name = models.CharField(max_length=160)
+    
+    def __str__(self):
+            return self.name
 
 
 class Project(models.Model):
@@ -162,8 +174,8 @@ class Project(models.Model):
     details = models.OneToOneField(
         Detail, on_delete=models.CASCADE, blank=True, null=True
     )
-    industry = models.OneToOneField(
-        Industry, on_delete=models.CASCADE, blank=True, null=True
+    industry = models.ForeignKey(
+        Industry, on_delete=models.SET_NULL, blank=True, null=True
     )
     technologies = models.ManyToManyField(
         Technology,
