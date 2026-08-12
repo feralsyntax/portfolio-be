@@ -113,6 +113,43 @@ class Technology(models.Model):
         return self.name
 
 
+class KeyFeature(models.Model):
+    title = models.CharField(max_length=160)
+    description = models.TextField()
+
+
+class Challenge(models.Model):
+    title = models.CharField(max_length=160)
+    description = models.TextField()
+
+
+class Impact(models.Model):
+    title = models.CharField(max_length=160)
+    description = models.TextField()
+
+
+class Detail(models.Model):
+    problem = models.TextField()
+    solution = models.TextField()
+    overview = models.TextField()
+    front_end_techs = models.CharField(max_length=160)
+    back_end_techs = models.CharField(max_length=160)
+    other_techs = models.CharField(max_length=160)
+    key_features = models.ManyToManyField(
+        KeyFeature,
+        blank=True,
+    )
+    challenges = models.ManyToManyField(
+        Challenge,
+        blank=True,
+    )
+    impacts = models.ManyToManyField(
+        Impact,
+        blank=True,
+    )
+    live_site = models.URLField()
+
+
 class Project(models.Model):
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -122,13 +159,15 @@ class Project(models.Model):
     name = models.CharField(max_length=100, unique=True)
     short_description = models.CharField(max_length=160)
     long_description = models.TextField()
-    details = models.TextField()
     industry = models.CharField(max_length=100)
     snapshot = CloudinaryField(
         "image",
         overwrite=True,
         format="jpg",
         transformation=[{"quality": "auto", "fetch_format": "auto"}],
+    )
+    details = models.OneToOneField(
+        Detail, on_delete=models.CASCADE, blank=True, null=True
     )
     technologies = models.ManyToManyField(
         Technology,
