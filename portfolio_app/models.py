@@ -138,6 +138,10 @@ class Detail(models.Model):
         blank=True,
     )
     live_site = models.URLField()
+    
+
+class Industry(models.Model):
+    name = models.CharField(max_length=160)
 
 
 class Project(models.Model):
@@ -149,7 +153,6 @@ class Project(models.Model):
     name = models.CharField(max_length=100, unique=True)
     short_description = models.CharField(max_length=160)
     long_description = models.TextField()
-    industry = models.CharField(max_length=100)
     snapshot = CloudinaryField(
         "image",
         overwrite=True,
@@ -158,6 +161,9 @@ class Project(models.Model):
     )
     details = models.OneToOneField(
         Detail, on_delete=models.CASCADE, blank=True, null=True
+    )
+    industry = models.OneToOneField(
+        Industry, on_delete=models.CASCADE, blank=True, null=True
     )
     technologies = models.ManyToManyField(
         Technology,
