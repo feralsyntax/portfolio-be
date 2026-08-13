@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from portfolio_app.models import (
     Feature,
+    Industry,
     Technology,
 )
 
@@ -11,7 +12,14 @@ class TechnologySerializer(serializers.ModelSerializer):
         model = Technology
         fields = ("name",)
 
+
 class FeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feature
+        fields = ("name",)
+
+
+class IndustrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Industry
         fields = ("name",)
