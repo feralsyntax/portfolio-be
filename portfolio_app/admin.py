@@ -19,8 +19,14 @@ admin.site.register(Impact)
 
 class DetailInline(admin.StackedInline):
     model = Detail
-    extra = 0
+    extra = 1
     max_num = 1
+    
+    filter_horizontal = (
+        "key_features",
+        "challenges",
+        "impacts",
+    )
 
 
 @admin.register(Project)
