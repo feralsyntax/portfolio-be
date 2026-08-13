@@ -7,6 +7,7 @@ from portfolio_app.models import (
     Impact,
     Industry,
     KeyFeature,
+    Project,
     Technology,
 )
 
@@ -65,4 +66,27 @@ class DetailSerializer(serializers.ModelSerializer):
             "challenges",
             "impacts",
             "live_site",
+        )
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    industry = IndustrySerializer()
+    technologies = TechnologySerializer(many=True)
+    features = FeatureSerializer(many=True)
+    details = DetailSerializer()
+
+    class Meta:
+        model = Project
+        fields = (
+            "uuid",
+            "name",
+            "short_description",
+            "long_description",
+            "snapshot",
+            "industry",
+            "technologies",
+            "features",
+            "is_featured",
+            "date_added",
+            "details",
         )
