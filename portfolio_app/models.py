@@ -165,6 +165,14 @@ class Project(models.Model):
     class Meta:
         ordering: typing.ClassVar = ["name"]
 
+        constraints = [  # noqa: RUF012
+            models.UniqueConstraint(
+                fields=["is_featured"],
+                condition=models.Q(is_featured=True),
+                name="only_one_featured_project",
+            ),
+        ]
+
     def __str__(self):
         return self.name
 
