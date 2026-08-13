@@ -150,15 +150,14 @@ class Project(models.Model):
         transformation=[{"quality": "auto", "fetch_format": "auto"}],
     )
     industry = models.ForeignKey(
-        Industry, on_delete=models.SET_NULL, blank=True, null=True
+        Industry,
+        on_delete=models.PROTECT,
     )
     technologies = models.ManyToManyField(
         Technology,
-        blank=True,
     )
     features = models.ManyToManyField(
         Feature,
-        blank=True,
     )
     is_featured = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
