@@ -6,6 +6,7 @@ from portfolio_app.serializers import ProjectSerializer
 
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProjectSerializer
+    lookup_field = "uuid"
 
     def get_queryset(self):
         return Project.objects.select_related(
