@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from portfolio_app.models import (
@@ -91,8 +92,9 @@ class ProjectSerializer(serializers.ModelSerializer):
             "date_added",
             "details",
         )
-    
-    def get_snapshot(self, obj):
+
+    @extend_schema_field(serializers.URLField(allow_null=True))
+    def get_snapshot(self, obj) -> str | None:
         if not obj.snapshot:
             return None
 
