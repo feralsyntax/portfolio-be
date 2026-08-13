@@ -1,3 +1,7 @@
+import typing
+import uuid
+
+from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -71,3 +75,125 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
+
+
+class Technology(models.Model):
+    name = models.CharField(
+        max_length=60,
+        unique=True,
+    )
+    date_added = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class Feature(models.Model):
+    name = models.CharField(
+        max_length=60,
+        unique=True,
+    )
+    date_added = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class KeyFeature(models.Model):
+    title = models.CharField(max_length=160)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class Challenge(models.Model):
+    title = models.CharField(max_length=160)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class Impact(models.Model):
+    title = models.CharField(max_length=160)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class Industry(models.Model):
+    name = models.CharField(max_length=160)
+
+    def __str__(self):
+        return self.name
+
+
+class Project(models.Model):
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+    )
+    name = models.CharField(max_length=100, unique=True)
+    short_description = models.CharField(max_length=160)
+    long_description = models.TextField()
+    snapshot = CloudinaryField(
+        "image",
+        overwrite=True,
+        format="jpg",
+        transformation=[{"quality": "auto", "fetch_format": "auto"}],
+    )
+    industry = models.ForeignKey(
+        Industry, on_delete=models.SET_NULL, blank=True, null=True
+    )
+    technologies = models.ManyToManyField(
+        Technology,
+        blank=True,
+    )
+    features = models.ManyToManyField(
+        Feature,
+        blank=True,
+    )
+    is_featured = models.BooleanField(default=False)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering: typing.ClassVar = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+class Detail(models.Model):
+    problem = models.TextField()
+    solution = models.TextField()
+    overview = models.TextField()
+    front_end_techs = models.CharField(max_length=160)
+    back_end_techs = models.CharField(max_length=160)
+    other_techs = models.CharField(max_length=160)
+    live_site = models.URLField()
+    key_features = models.ManyToManyField(
+        KeyFeature,
+        blank=True,
+    )
+    challenges = models.ManyToManyField(
+        Challenge,
+        blank=True,
+    )
+    impacts = models.ManyToManyField(
+        Impact,
+        blank=True,
+    )
+    project = models.OneToOneField(
+        Project,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="details",
+    )
