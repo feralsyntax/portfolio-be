@@ -179,20 +179,15 @@ class Detail(models.Model):
     live_site = models.URLField()
     key_features = models.ManyToManyField(
         KeyFeature,
-        blank=True,
     )
     challenges = models.ManyToManyField(
         Challenge,
-        blank=True,
     )
     impacts = models.ManyToManyField(
         Impact,
-        blank=True,
     )
     project = models.OneToOneField(
         Project,
         on_delete=models.CASCADE,
-        blank=True,
-        null=True,
         related_name="details",
     )
