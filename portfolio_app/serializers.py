@@ -3,6 +3,7 @@ from rest_framework import serializers
 from portfolio_app.models import (
     Challenge,
     Feature,
+    Impact,
     Industry,
     KeyFeature,
     Technology,
@@ -36,4 +37,10 @@ class KeyFeatureSerializer(serializers.ModelSerializer):
 class ChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Challenge
+        fields = ("title", "description")
+
+
+class ImpactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Impact
         fields = ("title", "description")
