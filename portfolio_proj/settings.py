@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
+    "drf_spectacular",
 ]
 
 AUTH_USER_MODEL = "portfolio_app.CustomUser"
