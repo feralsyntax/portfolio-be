@@ -1,4 +1,4 @@
-from drf_spectacular.utils import extend_schema, extend_schema_view
+from drf_spectacular.utils import OpenApiResponse, extend_schema, extend_schema_view
 from rest_framework import permissions, viewsets
 
 from portfolio_app.models import Project
@@ -7,14 +7,30 @@ from portfolio_app.serializers import ProjectSerializer
 
 @extend_schema_view(
     list=extend_schema(
+        tags=["Projects"],
+        operation_id="projectsList",
         summary="List projects",
-        description="Returns all portfolio projects.",
-        responses=ProjectSerializer(many=True),
+        description="List all portfolio projects with their details.",
+        auth=[],
+        responses={
+            200: OpenApiResponse(
+                response=ProjectSerializer(many=True),
+                description="A list of portfolio projects.",
+            )
+        },
     ),
     retrieve=extend_schema(
+        tags=["Projects"],
+        operation_id="projectsRetrieve",
         summary="Retrieve a project",
-        description="Returns a single portfolio project by UUID.",
-        responses=ProjectSerializer,
+        description="Retrieve a single portfolio project by UUID.",
+        auth=[],
+        responses={
+            200: OpenApiResponse(
+                response=ProjectSerializer,
+                description="The requested portfolio project.",
+            )
+        },
     ),
 )
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
