@@ -1,0 +1,197 @@
+openapi: 3.0.3
+info:
+  title: Portfolio API
+  version: 1.0.0
+  description: Public REST API for retrieving portfolio projects and their associated
+    details.
+paths:
+  /api/v1/projects/:
+    get:
+      operationId: projectsList
+      description: List all portfolio projects with their details.
+      summary: List projects
+      tags:
+      - Projects
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+          description: A list of portfolio projects.
+  /api/v1/projects/{uuid}/:
+    get:
+      operationId: projectsRetrieve
+      description: Retrieve a single portfolio project by UUID.
+      summary: Retrieve a project
+      parameters:
+      - in: path
+        name: uuid
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Projects
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: The requested portfolio project.
+components:
+  schemas:
+    Challenge:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 160
+        description:
+          type: string
+      required:
+      - description
+      - title
+    Detail:
+      type: object
+      properties:
+        problem:
+          type: string
+        solution:
+          type: string
+        overview:
+          type: string
+        front_end_techs:
+          type: string
+          maxLength: 160
+        back_end_techs:
+          type: string
+          maxLength: 160
+        other_techs:
+          type: string
+          maxLength: 160
+        key_features:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyFeature'
+        challenges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Challenge'
+        impacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Impact'
+        live_site:
+          type: string
+          format: uri
+          maxLength: 200
+      required:
+      - back_end_techs
+      - challenges
+      - front_end_techs
+      - impacts
+      - key_features
+      - live_site
+      - other_techs
+      - overview
+      - problem
+      - solution
+    Feature:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 60
+      required:
+      - name
+    Impact:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 160
+        description:
+          type: string
+      required:
+      - description
+      - title
+    Industry:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 160
+      required:
+      - name
+    KeyFeature:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 160
+        description:
+          type: string
+      required:
+      - description
+      - title
+    Project:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        short_description:
+          type: string
+          maxLength: 160
+        long_description:
+          type: string
+        snapshot:
+          type: string
+          format: uri
+          nullable: true
+          readOnly: true
+        industry:
+          $ref: '#/components/schemas/Industry'
+        technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Technology'
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/Feature'
+        is_featured:
+          type: boolean
+        date_added:
+          type: string
+          format: date-time
+          readOnly: true
+        details:
+          $ref: '#/components/schemas/Detail'
+      required:
+      - date_added
+      - details
+      - features
+      - industry
+      - long_description
+      - name
+      - short_description
+      - snapshot
+      - technologies
+      - uuid
+    Technology:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 60
+      required:
+      - name
