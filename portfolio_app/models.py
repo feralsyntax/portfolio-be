@@ -134,28 +134,6 @@ class Industry(models.Model):
         return self.name
 
 
-class Detail(models.Model):
-    problem = models.TextField()
-    solution = models.TextField()
-    overview = models.TextField()
-    front_end_techs = models.CharField(max_length=160)
-    back_end_techs = models.CharField(max_length=160)
-    other_techs = models.CharField(max_length=160)
-    live_site = models.URLField()
-    key_features = models.ManyToManyField(
-        KeyFeature,
-        blank=True,
-    )
-    challenges = models.ManyToManyField(
-        Challenge,
-        blank=True,
-    )
-    impacts = models.ManyToManyField(
-        Impact,
-        blank=True,
-    )
-
-
 class Project(models.Model):
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -181,23 +159,40 @@ class Project(models.Model):
     features = models.ManyToManyField(
         Feature,
     )
-    details = models.OneToOneField(
-        Detail,
-        on_delete=models.CASCADE,
-    )
     is_featured = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering: typing.ClassVar = ["name"]
 
-        constraints = [  # noqa: RUF012
-            models.UniqueConstraint(
-                fields=["is_featured"],
-                condition=models.Q(is_featured=True),
-                name="only_one_featured_project",
-            ),
-        ]
-
     def __str__(self):
         return self.name
+
+
+class Detail(models.Model):
+    problem = models.TextField()
+    solution = models.TextField()
+    overview = models.TextField()
+    front_end_techs = models.CharField(max_length=160)
+    back_end_techs = models.CharField(max_length=160)
+    other_techs = models.CharField(max_length=160)
+    live_site = models.URLField()
+    key_features = models.ManyToManyField(
+        KeyFeature,
+        blank=True,
+    )
+    challenges = models.ManyToManyField(
+        Challenge,
+        blank=True,
+    )
+    impacts = models.ManyToManyField(
+        Impact,
+        blank=True,
+    )
+    project = models.OneToOneField(
+        Project,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="details",
+    )
