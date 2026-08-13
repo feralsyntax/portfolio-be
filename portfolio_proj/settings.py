@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "drf_spectacular",
+    "drf_spectacular_sidecar",
 ]
 
 AUTH_USER_MODEL = "portfolio_app.CustomUser"
