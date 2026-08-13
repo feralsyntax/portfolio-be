@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "corsheaders",
+    "rest_framework",
 ]
 
 AUTH_USER_MODEL = "portfolio_app.CustomUser"
