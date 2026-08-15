@@ -62,8 +62,6 @@ components:
           type: string
         solution:
           type: string
-        overview:
-          type: string
         front_end_techs:
           type: string
           maxLength: 160
@@ -97,7 +95,6 @@ components:
       - key_features
       - live_site
       - other_techs
-      - overview
       - problem
       - solution
     Feature:
@@ -170,6 +167,9 @@ components:
             $ref: '#/components/schemas/Feature'
         is_featured:
           type: boolean
+        first_created:
+          type: string
+          format: date
         date_added:
           type: string
           format: date-time
@@ -180,6 +180,7 @@ components:
       - date_added
       - details
       - features
+      - first_created
       - industry
       - long_description
       - name
