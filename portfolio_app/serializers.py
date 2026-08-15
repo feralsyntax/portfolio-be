@@ -89,6 +89,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             "technologies",
             "features",
             "is_featured",
+            "first_created",
             "date_added",
             "details",
         )

@@ -160,6 +160,7 @@ class Project(models.Model):
         Feature,
     )
     is_featured = models.BooleanField(default=False)
+    first_created = models.DateField(_("First created"),)
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:

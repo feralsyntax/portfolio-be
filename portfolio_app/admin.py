@@ -35,6 +35,7 @@ class ProjectAdmin(admin.ModelAdmin):
         "name",
         "industry",
         "is_featured",
+        "first_created",
         "date_added",
     )
 
