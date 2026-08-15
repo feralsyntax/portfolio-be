@@ -59,7 +59,6 @@ class DetailSerializer(serializers.ModelSerializer):
         fields = (
             "problem",
             "solution",
-            "overview",
             "front_end_techs",
             "back_end_techs",
             "other_techs",

@@ -181,7 +181,6 @@ class Project(models.Model):
 class Detail(models.Model):
     problem = models.TextField()
     solution = models.TextField()
-    overview = models.TextField()
     front_end_techs = models.CharField(max_length=160)
     back_end_techs = models.CharField(max_length=160)
     other_techs = models.CharField(max_length=160)
