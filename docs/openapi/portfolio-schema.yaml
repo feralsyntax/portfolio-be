@@ -5,6 +5,27 @@ info:
   description: Public REST API for retrieving portfolio projects and their associated
     details.
 paths:
+  /api/v1/contacts/add/:
+    post:
+      operationId: addContact
+      description: Add a new contact to the databaseAnd send an email message to the
+        portfolio admin.
+      summary: Add a new contact and message admin
+      tags:
+      - Contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+          description: A new contact instance has been created.
   /api/v1/projects/:
     get:
       operationId: projectsList
@@ -55,6 +76,53 @@ components:
       required:
       - description
       - title
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 300
+        email:
+          type: string
+          format: email
+          maxLength: 500
+        message:
+          type: string
+          maxLength: 10000
+        date_added:
+          type: string
+          format: date-time
+      required:
+      - email
+      - id
+      - message
+      - name
+    ContactRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 300
+        email:
+          type: string
+          format: email
+          minLength: 1
+          maxLength: 500
+        message:
+          type: string
+          minLength: 1
+          maxLength: 10000
+        date_added:
+          type: string
+          format: date-time
+      required:
+      - email
+      - message
+      - name
     Detail:
       type: object
       properties:

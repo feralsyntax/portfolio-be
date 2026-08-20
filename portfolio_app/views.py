@@ -56,7 +56,24 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
 
 class AddContact(APIView):
     permission_classes = [permissions.AllowAny]  # noqa: RUF012
-
+    
+    @extend_schema(
+    tags=["Contact"],
+    operation_id="addContact",
+    summary="Add a new contact and message admin",
+    description=(
+        "Add a new contact to the database"
+        "And send an email message to the portfolio admin."
+    ),
+    auth=[],
+    request=ContactSerializer,
+    responses={
+        201: OpenApiResponse(
+            response=ContactSerializer,
+            description="A new contact instance has been created.",
+        )
+    },
+)
     def post(self, request, format=None):
         serializer = ContactSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
