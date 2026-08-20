@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from portfolio_app.models import (
     Challenge,
+    Contact,
     Detail,
     Feature,
     Impact,
@@ -99,3 +100,9 @@ class ProjectSerializer(serializers.ModelSerializer):
             return None
 
         return obj.snapshot.url
+
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = "__all__"
