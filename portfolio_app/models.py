@@ -199,3 +199,10 @@ class Detail(models.Model):
         on_delete=models.CASCADE,
         related_name="details",
     )
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=300)
+    email = models.EmailField(max_length=500)
+    message = models.TextField(max_length=10000)
+    date_added = models.DateTimeField(default=timezone.now)
