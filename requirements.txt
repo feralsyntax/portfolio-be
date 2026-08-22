@@ -12,6 +12,7 @@ django-cors-headers==4.9.0
 djangorestframework==3.18.0
 drf-spectacular==0.30.0
 drf-spectacular-sidecar==2026.8.1
+gunicorn==26.1.0
 idna==3.18
 inflection==0.5.1
 jsonschema==4.26.0
