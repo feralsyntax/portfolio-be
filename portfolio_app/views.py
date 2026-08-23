@@ -1,3 +1,4 @@
+from django.views.decorators.cache import never_cache
 from drf_spectacular.utils import OpenApiResponse, extend_schema, extend_schema_view
 from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
@@ -41,6 +42,7 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.AllowAny]  # noqa: RUF012
     lookup_field = "uuid"
 
+    @never_cache
     def get_queryset(self):
         return Project.objects.select_related(
             "industry",
@@ -56,24 +58,24 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
 
 class AddContact(APIView):
     permission_classes = [permissions.AllowAny]  # noqa: RUF012
-    
+
     @extend_schema(
-    tags=["Contact"],
-    operation_id="addContact",
-    summary="Add a new contact and message admin",
-    description=(
-        "Add a new contact to the database"
-        "And send an email message to the portfolio admin."
-    ),
-    auth=[],
-    request=ContactSerializer,
-    responses={
-        201: OpenApiResponse(
-            response=ContactSerializer,
-            description="A new contact instance has been created.",
-        )
-    },
-)
+        tags=["Contact"],
+        operation_id="addContact",
+        summary="Add a new contact and message admin",
+        description=(
+            "Add a new contact to the database"
+            "And send an email message to the portfolio admin."
+        ),
+        auth=[],
+        request=ContactSerializer,
+        responses={
+            201: OpenApiResponse(
+                response=ContactSerializer,
+                description="A new contact instance has been created.",
+            )
+        },
+    )
     def post(self, request, format=None):
         serializer = ContactSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
