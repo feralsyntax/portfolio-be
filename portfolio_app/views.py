@@ -45,7 +45,6 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.AllowAny]  # noqa: RUF012
     lookup_field = "uuid"
 
-    @never_cache
     def get_queryset(self):
         return Project.objects.select_related(
             "industry",
