@@ -14,7 +14,7 @@ from pathlib import Path
 
 import cloudinary
 import dj_database_url
-from decouple import config
+from decouple import Csv, config
 
 # Basic Configurations
 SECRET_KEY = config("SECRET_KEY")
@@ -31,6 +31,7 @@ ALLOWED_HOSTS = config(
     default="127.0.0.1",
     cast=lambda v: [s.strip() for s in v.split(",")],
 )
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
 
 # Database Configurations
 if config("MODE") == "dev":
