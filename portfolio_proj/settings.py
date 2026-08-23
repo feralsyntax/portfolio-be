@@ -14,23 +14,16 @@ from pathlib import Path
 
 import cloudinary
 import dj_database_url
-from decouple import config
+from decouple import Csv, config
 
 # Basic Configurations
 SECRET_KEY = config("SECRET_KEY")
 MODE = config("MODE", default="dev", cast=str)
 DEBUG = config("DEBUG", default=True, cast=bool)
 CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", default=False, cast=bool)
-CORS_ALLOWED_ORIGINS = config(
-    "CORS_ALLOWED_ORIGINS",
-    default="http://127.0.0.1:8000",
-    cast=lambda v: [s.strip() for s in v.split(",")],
-)
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default="127.0.0.1",
-    cast=lambda v: [s.strip() for s in v.split(",")],
-)
+CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
 
 # Database Configurations
 if config("MODE") == "dev":
