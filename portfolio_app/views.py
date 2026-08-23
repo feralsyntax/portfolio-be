@@ -1,3 +1,4 @@
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from drf_spectacular.utils import OpenApiResponse, extend_schema, extend_schema_view
 from rest_framework import permissions, status, viewsets
@@ -37,6 +38,8 @@ from portfolio_app.services import send_new_contact_email
         },
     ),
 )
+@method_decorator(never_cache, name="list")
+@method_decorator(never_cache, name="retrieve")
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [permissions.AllowAny]  # noqa: RUF012
