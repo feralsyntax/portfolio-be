@@ -160,7 +160,10 @@ class Project(models.Model):
         Feature,
     )
     is_featured = models.BooleanField(default=False)
-    first_created = models.DateField(_("First created"),)
+    live_site = models.URLField()
+    first_created = models.DateField(
+        _("First created"),
+    )
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -184,7 +187,6 @@ class Detail(models.Model):
     front_end_techs = models.CharField(max_length=160)
     back_end_techs = models.CharField(max_length=160)
     other_techs = models.CharField(max_length=160)
-    live_site = models.URLField()
     key_features = models.ManyToManyField(
         KeyFeature,
     )
