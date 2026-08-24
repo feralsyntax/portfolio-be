@@ -151,17 +151,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Impact'
-        live_site:
-          type: string
-          format: uri
-          maxLength: 200
       required:
       - back_end_techs
       - challenges
       - front_end_techs
       - impacts
       - key_features
-      - live_site
       - other_techs
       - problem
       - solution
@@ -235,6 +230,14 @@ components:
             $ref: '#/components/schemas/Feature'
         is_featured:
           type: boolean
+        live_site:
+          type: string
+          format: uri
+          maxLength: 200
+        github_url:
+          type: string
+          format: uri
+          maxLength: 200
         first_created:
           type: string
           format: date
@@ -249,7 +252,9 @@ components:
       - details
       - features
       - first_created
+      - github_url
       - industry
+      - live_site
       - long_description
       - name
       - short_description
