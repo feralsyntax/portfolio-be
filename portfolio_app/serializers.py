@@ -66,7 +66,6 @@ class DetailSerializer(serializers.ModelSerializer):
             "key_features",
             "challenges",
             "impacts",
-            "live_site",
         )
 
 
@@ -89,6 +88,8 @@ class ProjectSerializer(serializers.ModelSerializer):
             "technologies",
             "features",
             "is_featured",
+            "live_site",
+            "github_url",
             "first_created",
             "date_added",
             "details",
