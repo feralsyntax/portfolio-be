@@ -46,15 +46,19 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = "uuid"
 
     def get_queryset(self):
-        return Project.objects.select_related(
-            "industry",
-            "details",
-        ).prefetch_related(
-            "technologies",
-            "features",
-            "details__key_features",
-            "details__challenges",
-            "details__impacts",
+        return (
+            Project.objects.select_related(
+                "industry",
+                "details",
+            )
+            .prefetch_related(
+                "technologies",
+                "features",
+                "details__key_features",
+                "details__challenges",
+                "details__impacts",
+            )
+            .order_by("-is_featured", "-first_created")
         )
 
 
