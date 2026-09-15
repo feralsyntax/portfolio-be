@@ -161,7 +161,7 @@ class Project(models.Model):
     )
     is_featured = models.BooleanField(default=False)
     live_site = models.URLField()
-    github_url = models.URLField()
+    github_url = models.URLField(null=True, blank=True)
     first_created = models.DateField(
         _("First created"),
     )
@@ -194,9 +194,7 @@ class Detail(models.Model):
     challenges = models.ManyToManyField(
         Challenge,
     )
-    impacts = models.ManyToManyField(
-        Impact,
-    )
+    impacts = models.ManyToManyField(Impact, blank=True)
     project = models.OneToOneField(
         Project,
         on_delete=models.CASCADE,
