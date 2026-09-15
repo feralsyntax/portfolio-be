@@ -194,7 +194,7 @@ class Detail(models.Model):
     challenges = models.ManyToManyField(
         Challenge,
     )
-    impacts = models.ManyToManyField(Impact, null=True, blank=True)
+    impacts = models.ManyToManyField(Impact, blank=True)
     project = models.OneToOneField(
         Project,
         on_delete=models.CASCADE,
