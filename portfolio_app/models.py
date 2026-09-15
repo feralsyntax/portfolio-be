@@ -161,7 +161,7 @@ class Project(models.Model):
     )
     is_featured = models.BooleanField(default=False)
     live_site = models.URLField()
-    github_url = models.URLField()
+    github_url = models.URLField(null=True, blank=True)
     first_created = models.DateField(
         _("First created"),
     )
